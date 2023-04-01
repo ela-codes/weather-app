@@ -1,0 +1,39 @@
+:root {
+    --offwhite: #e0e0e0;
+    --offgray: #b6b6b6;
+}
+
+body, h4 {
+    padding: 0;
+    margin: 0;
+}
+
+
+#page-content {
+    height: 100vh;
+    color: var(--offwhite);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.video-bg {
+    z-index: -1;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+footer, a {
+    color: var(--offgray);
+    font-size: 12px;
+}
