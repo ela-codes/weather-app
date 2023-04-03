@@ -22,3 +22,12 @@ export function displayImgContent(imgFile, className) {
     div.appendChild(img)
     main.appendChild(div)
 }
+
+export function removeOldDisplay() {
+    const nodes = main.childNodes
+    const length = main.childNodes.length-1
+
+    for (let i = length; i >= 0 ; i--) {
+        nodes[i].remove() 
+    }
+}

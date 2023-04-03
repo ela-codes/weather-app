@@ -11,13 +11,16 @@
 <body>
     <div class="video-bg">
         <video autoplay muted loop id="background">
-            <source src="./background/night.mp4" type="video/mp4">
+            <source src="#" type="video/mp4">
         </video>
         
     </div>
     <div id="page">
         <div id="page-content">
-            <div class="weather"></div>
+            <div class="search-bar">
+                <input type="text" name="location-search" id="location-search" placeholder="Search..." pattern="[a-zA-Z]+" autocomplete="off" />
+            </div>
+            <div class="weather" aria-live="polite"></div>
         </div>
         <footer>
             Created by <a class="github" href="https://github.com/ateodocio">ateodocio</a> | Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>
