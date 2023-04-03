@@ -3,20 +3,26 @@
     --offgray: #b6b6b6;
 }
 
-body, h4 {
+body, h4, a, footer {
     padding: 0;
     margin: 0;
+    border: 0;
 }
 
+#page {
+    background-color: rgb(0,0,0,0.3);
+}
 
 #page-content {
-    height: 100vh;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
     color: var(--offwhite);
+    max-width: clamp(600px, 30vw, 800px);
+    height: 98vh;
+    margin-left: 15%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-
+    justify-content: left;
 }
 
 .video-bg {
@@ -35,5 +41,27 @@ video {
 
 footer, a {
     color: var(--offgray);
-    font-size: 12px;
+    text-align: center;
+}
+
+
+.weather {
+    margin-top: 40%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+}
+
+.weather div {
+    padding: 0.3rem 0;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+.temp_c {
+    grid-column: 1 / 2;
+    font-size: 7rem;
+    font-weight: 600;
 }

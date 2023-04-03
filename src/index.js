@@ -1,4 +1,4 @@
-const weatherDiv = document.querySelector('.weather')
+import { displayTxtContent, displayImgContent} from './ui.js'
 
 const url = "https://api.weatherapi.com/v1/current.json?key=ccd3ddc182e74173940123740232903&q=Winnipeg&aqi=no" //public free-use weather api key
 
@@ -13,63 +13,58 @@ async function fetchWeather(url) {
     }
 }
 
-const currInfo = ["feelslike_c", "feelslike_f", 
-                "humidity", "is_day", "last_updated", 
-                "precip_mm", "temp_c", "temp_f"]
+const currInfo = [
+    ["temp_c", ""],
+    ["condition", ""],
+    ["feelslike_c", "Feels Like (°C)"], 
+    ["humidity", "Humidity"],
+    ["last_updated", "Last Updated On"], 
+    ["precip_mm", "Precipitation (mm)"]
+]
 
-const locationInfo = ["country", "localtime", "name", 
-                    "region", "tz_id"]
+const locationInfo = [
+    ["country", "Country"], 
+    ["localtime", "Date & Time"],
+    ["name", "City"], 
+    ["region", "Province"]
+]
     
 
 const weather = fetchWeather(url).then(data => {
     console.log(data)
     extractCurrWeather(data.current)
     extractLocation(data.location)
+    updateBackground(data.current.is_day)
 })
 
 function extractCurrWeather(data) {
-    const currKeys = Object.keys(data.condition)
-
-    for (let key of currKeys) {
-        if (key === "icon") {
-            const properUrl = "https:" + data.condition[key]
-            displayImgContent(properUrl)
-        } else if (key === "text") {
-            displayTxtContent(key, data.condition[key])
-        }
-        // console.log(`${key}: ${data.condition[key]}`)
-    }
-
+    // weather temps
     currInfo.forEach(info => {
-        displayTxtContent(info, data[info])
-        // console.log(`${info}: ${data[info]}`)
+        if (info[0] === "condition") {
+            const properUrl = "https:" + data.condition['icon']
+            displayImgContent(properUrl, "condition-icon")
+
+            displayTxtContent("Condition", data.condition['text'], "condition-text")
+        } else {
+        displayTxtContent(info[1], data[info[0]], info[0])
+        }
     })
 }
 
 function extractLocation(data) {
     locationInfo.forEach(info => {
-        displayTxtContent(info, data[info])
-        // console.log(`${info}: ${data[info]}`)
+        displayTxtContent(info[1], data[info[0]], info[0])
     })
 }
 
-const main = document.querySelector('.weather')
-
-function displayTxtContent(header, content) {
-    const div = document.createElement('div')
-    const h4 = document.createElement('h4')
-    const text = document.createElement('div')
-    h4.textContent = header
-    text.textContent = String(content)
-    div.append(h4, text)
-    main.appendChild(div)
-    
-}
-
-function displayImgContent(imgFile) {
-    const div = document.createElement('div')
-    const img = document.createElement('img')
-    img.src = imgFile
-    div.appendChild(img)
-    main.appendChild(div)
+function updateBackground(status) {
+    // 0 = night, 1 = day
+    const bg = document.querySelector('#background')
+    if (status === 1) {
+        bg.src = "./background/day.mp4"
+    } if (status === 0) {
+        bg.src = "./background/night.mp4"
+    } else {
+        bg.src = "./background/afternoon.mp4"
+    }
 }
