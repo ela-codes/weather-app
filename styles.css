@@ -50,6 +50,7 @@ footer, a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-flow: row;
+    
 }
 
 .weather div {
@@ -60,7 +61,8 @@ h4 {
     font-size: 1.5rem;
 }
 
-.temp_c {
+.temp_c,
+.temp_f {
     grid-column: 1 / 2;
     font-size: 7rem;
     font-weight: 600;
@@ -83,4 +85,53 @@ input#location-search:active {
 input#location-search:hover {
     border-bottom: 1px solid var(--offgray);
    
+}
+
+input[type="checkbox"] + label {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+input[type="checkbox"] + label::before {
+    content: "";
+    width: 3em;
+    height: 1.5em;
+    background-color: var(--offwhite);
+    border-radius: 1em;
+    margin-right: .25em;
+    cursor: pointer;
+    border: 1px darkgray solid;
+    opacity: 0.8;
+
+}
+
+input[type="checkbox"].toggle {
+    opacity: 0;
+    position: absolute;
+}
+
+
+input[type="checkbox"] + label::after {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: .2em;
+    content: "C";
+    width: 1.3em;
+    height: 1.3em;
+    color: var(--offgray);
+    opacity: 0.7;
+    background-color: white;
+    border-radius: 1em;
+    cursor: pointer;
+    transition: transform 200ms ease-in-out;
+}
+
+input[type="checkbox"]:checked + label::after {
+    color: var(--offgray);
+    opacity: 0.7;
+    background-color: white;
+    content: "F";
+    transform: translateX(1.4em);
 }
