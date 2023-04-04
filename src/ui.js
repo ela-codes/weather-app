@@ -31,3 +31,4 @@ export function removeOldDisplay() {
         nodes[i].remove() 
     }
 }
+

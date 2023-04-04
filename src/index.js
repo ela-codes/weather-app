@@ -1,7 +1,5 @@
 import { displayTxtContent, displayImgContent, removeOldDisplay} from './ui.js'
 
-const url = "https://api.weatherapi.com/v1/current.json?key=ccd3ddc182e74173940123740232903&q=London&aqi=no" //public free-use weather api key
-
 const currInfo = [
     ["temp_c", ""],
     ["condition", ""],
@@ -18,6 +16,7 @@ const locationInfo = [
     ["region", "Province"]
 ]
 
+let currLocation = 'London'
 
 async function fetchWeather(url) {
     try {
@@ -41,23 +40,41 @@ async function getData(url) {
 }
 
 function buildURL(location) {
-    const key = "https://api.weatherapi.com/v1/current.json?key=ccd3ddc182e74173940123740232903&q="
+    const key = "https://api.weatherapi.com/v1/current.json?key=ccd3ddc182e74173940123740232903&q=" //public free-use weather api key
     const param = "&aqi=no"
     return key + location + param
 }
 
-function showNewLocation() {
+function showNewLocation(location) {
     removeOldDisplay()
-    getData(buildURL(search.value))
+    getData(buildURL(location))
 }
 
 const search = document.querySelector('input#location-search')
 search.addEventListener('keypress', (e) => {
-    if (e.keyCode == 13) showNewLocation()
+    if (e.keyCode == 13) {
+        currLocation = search.value
+        showNewLocation(currLocation)
+    }
 })
 
-getData(url)
+getData(buildURL(currLocation))
 
+
+const toggle = document.querySelector('.toggle')
+
+toggle.addEventListener('change', () => {
+    if (toggle.checked) { // change to farenheit
+        currInfo[0] = ["temp_f", ""]
+        currInfo[2] = ["feelslike_f", "Feels Like (°F)"]
+        showNewLocation(currLocation)
+        console.log(currInfo)
+    } else {
+        currInfo[0] = ["temp_c", ""]
+        currInfo[2] = ["feelslike_c", "Feels Like (°C)"]
+        showNewLocation(currLocation)
+    }
+})
 
 
 function extractCurrWeather(data) {
