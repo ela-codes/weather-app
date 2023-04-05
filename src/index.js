@@ -1,4 +1,4 @@
-import { displayTxtContent, displayImgContent, removeOldDisplay} from './ui.js'
+import { displayTxtContent, displayImgContent, removeOldDisplay, resetSearchInput} from './ui.js'
 
 const currInfo = [
     ["temp_c", ""],
@@ -54,6 +54,7 @@ const search = document.querySelector('input#location-search')
 search.addEventListener('keypress', (e) => {
     if (e.keyCode == 13) {
         currLocation = search.value
+        resetSearchInput()
         showNewLocation(currLocation)
     }
 })
