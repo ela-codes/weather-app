@@ -1,22 +1,22 @@
-import { displayTxtContent, displayImgContent, removeOldDisplay, resetSearchInput} from './ui.js'
+import { displayTxtContent, displayImgContent, removeOldDisplay, resetSearchInput } from './ui.js'
 
 const currInfo = [
     ["temp_c", ""],
     ["condition", ""],
     ["feelslike_c", "Feels Like (°C)"], 
     ["humidity", "Humidity"],
-    ["last_updated", "Last Updated On"], 
+    ["last_updated", "Last Updated On (Local)"], 
     ["precip_mm", "Precipitation (mm)"]
 ]
 
 const locationInfo = [
     ["country", "Country"], 
-    ["localtime", "Date & Time"],
     ["name", "City"], 
     ["region", "Province"]
 ]
 
 let currLocation = 'London'
+let currDayStatus = 1
 
 async function fetchWeather(url) {
     try {
@@ -33,7 +33,8 @@ async function getData(url) {
         const data = await fetchWeather(url)
         extractCurrWeather(data.current)
         extractLocation(data.location)
-        updateBackground(data.current.is_day)
+        updateBackground(currDayStatus, data.current.is_day)
+        currDayStatus = data.current.is_day
     } catch (err) {
         handleError(err)
     }
@@ -97,18 +98,19 @@ function extractLocation(data) {
     })
 }
 
-function updateBackground(status) {
-    console.log(status)
-    // 0 = night, 1 = day
-    const bg = document.querySelector('#background');
-    try {
-        if (status === 1) {
-            bg.src = "./background/day.mp4"
-        } if (status === 0) {
-            bg.src = "./background/night.mp4"
+function updateBackground(currStatus, newStatus) {
+    if (newStatus !== currStatus) { // if same, no need to load again
+        // 0 = night, 1 = day
+        const bg = document.querySelector('#background');
+        try {
+            if (newStatus === 1) {
+                bg.src = "./background/day.mp4"
+            } if (newStatus === 0) {
+                bg.src = "./background/night.mp4"
+            }
+        } catch(err) {
+            handleError(err)
         }
-    } catch(err) {
-        handleError(err)
     }
 }
 

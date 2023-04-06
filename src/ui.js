@@ -36,3 +36,4 @@ export function resetSearchInput() {
     const input = document.querySelector('#location-search')
     input.value = ''
 }
+
