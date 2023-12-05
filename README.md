@@ -7,4 +7,4 @@ Powered by Weather API.
 
 
 
-# [Live Demo](https://ateodocio.github.io/weather-app/)
+# [Live Demo](https://ela-codes.github.io/weather-app/)
